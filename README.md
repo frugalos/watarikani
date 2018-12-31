@@ -1,0 +1,2 @@
+# watarikani
+Wataru Sekenha Kani
