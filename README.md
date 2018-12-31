@@ -14,13 +14,13 @@ LumpId("0100000000070600000000000000000e")
 ```
 
 ## Head
-`./watarikani Head --addr 127.0.0.1:14278 --device file_1 --lumpid 0100000000070600000000000000000e`
+`./watarikani Head --addr 127.0.0.1:14278 --device file_0 --lumpid 0100000000070600000000000000000e`
 
 ```
 LumpHeader { approximate_data_size: 33280 }
 ```
 
-`./watarikani Head --addr 127.0.0.1:14278 --device file_1 --lumpid 0100000000070600000000000000000f`
+`./watarikani Head --addr 127.0.0.1:14278 --device file_0 --lumpid 0100000000070600000000000000000f`
 
 ```
 LumpId("0100000000070600000000000000000f") does not exist
