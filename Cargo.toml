@@ -1,0 +1,13 @@
+[package]
+name = "watarikani"
+version = "0.1.0"
+authors = ["yuuya uezato <yuuya_uezato@dwango.co.jp>"]
+edition = "2018"
+
+[dependencies]
+cannyls = "*"
+cannyls_rpc = "*"
+fibers = "*"
+fibers_rpc = "*"
+futures = "*"
+trackable = "*"
