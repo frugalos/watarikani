@@ -14,8 +14,8 @@ use cannyls_rpc::{Client, DeviceId};
 use fibers::{Executor, InPlaceExecutor, Spawn};
 use fibers_rpc::client::ClientService;
 use futures::{Async, Future};
-use std::thread;
 use std::net::SocketAddr;
+use std::thread;
 use structopt::StructOpt;
 
 macro_rules! wait {
@@ -37,44 +37,44 @@ fn str_to_u128(lumpid_str: &str) -> u128 {
     u128::from_str_radix(lumpid_str, 16).unwrap()
 }
 
-
 arg_enum! {
     #[derive(Debug)]
     enum Command {
         List,
         Get,
         Head,
+        Delete,
     }
 }
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "WatariKani")]
 struct Opt {
-    #[structopt(long = "addr")]
+    #[structopt(long = "rpc-addr", default_value = "127.0.0.1:14278")]
     addr: SocketAddr,
 
     #[structopt(long = "device")]
     device_id: String,
-        
+
     #[structopt(long = "lumpid")]
     lumpid: Option<String>,
-    
+
     #[structopt(raw(
         possible_values = "&Command::variants()",
         requires_ifs = r#"&[
 ("Get", "lumpid"),
 ("Head", "lumpid"),
+("Delete", "lumpid"),
 ]"#
     ))]
     command: Command,
 }
 
-
 fn main() {
     let opt = Opt::from_args();
     let server_addr = opt.addr;
     let device_id = to_device_id(&opt.device_id);
-    
+
     let executor = track_try_unwrap!(track_any_err!(InPlaceExecutor::new()));
 
     let service = ClientService::new(executor.handle());
@@ -86,7 +86,7 @@ fn main() {
             panic!("{}", e);
         }
     });
-    
+
     let client = Client::new(server_addr, service_handle);
     let request = client.request();
 
@@ -97,7 +97,7 @@ fn main() {
             for e in listed {
                 println!("{:?}", e);
             }
-        },
+        }
         Command::Get => {
             let lumpid = str_to_u128(&opt.lumpid.unwrap());
             let lumpid = LumpId::new(lumpid);
@@ -107,7 +107,7 @@ fn main() {
             } else {
                 println!("{:?} does not exist", lumpid);
             }
-        },
+        }
         Command::Head => {
             let lumpid = str_to_u128(&opt.lumpid.unwrap());
             let lumpid = LumpId::new(lumpid);
@@ -116,6 +116,16 @@ fn main() {
                 println!("{:?}", data);
             } else {
                 println!("{:?} does not exist", lumpid);
+            }
+        }
+        Command::Delete => {
+            let lumpid = str_to_u128(&opt.lumpid.unwrap());
+            let lumpid = LumpId::new(lumpid);
+            let removed = wait!(request.delete_lump(device_id, lumpid));
+            if removed {
+                println!("Removed {:?}", lumpid);
+            } else {
+                println!("There is no {:?}", lumpid);
             }
         }
     }
