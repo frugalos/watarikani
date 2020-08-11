@@ -508,7 +508,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "watarikani"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "cannyls 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cannyls_rpc 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -1,6 +1,6 @@
 [package]
 name = "watarikani"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["The FrugalOS Developers"]
 homepage = "https://github.com/frugalos/watarikani"
 repository = "https://github.com/frugalos/watarikani"
