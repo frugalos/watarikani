@@ -10,8 +10,8 @@ license = "MIT"
 edition = "2018"
 
 [dependencies]
-cannyls = "*"
-cannyls_rpc = "*"
+cannyls = "0.10"
+cannyls_rpc = "0.2"
 fibers = "*"
 fibers_rpc = "*"
 futures = "*"
