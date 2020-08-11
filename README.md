@@ -55,3 +55,9 @@ LumpId("00000000000001000000000000000000")
 LumpId("01000000000100000000000000000001")
 LumpId("01000000000102000000000000000001")
 ```
+
+# バイナリのビルド 
+
+```console
+$ docker build -t watarikani-build:latest docker/watarikani-build
+```
